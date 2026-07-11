@@ -1,0 +1,15 @@
+node_modules
+
+.env
+
+uploads/
+
+
+
+npm install
+
+npx knex migrate:latest --knexfile knexfile.cjs
+
+npx knex seed:run --knexfile knexfile.cjs
+
+npm start

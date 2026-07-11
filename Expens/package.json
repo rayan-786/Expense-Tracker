@@ -1,0 +1,40 @@
+{
+  "name": "expens",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "migrate": "knex --knexfile knexfile.cjs migrate:latest",
+    "rollback": "knex --knexfile knexfile.cjs migrate:rollback",
+    "make:migration": "knex --knexfile knexfile.cjs migrate:make",
+    "seed": "knex --knexfile knexfile.cjs seed:run",
+    "make:seed": "knex --knexfile knexfile.cjs seed:make"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "chart.js": "^4.5.1",
+    "chartjs-node-canvas": "^5.0.0",
+    "cors": "^2.8.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.4.2",
+    "exceljs": "^4.4.0",
+    "express": "^5.2.1",
+    "fs-extra": "^11.3.6",
+    "jsonwebtoken": "^9.0.3",
+    "knex": "^3.3.0",
+    "multer": "^2.2.0",
+    "mysql2": "^3.22.6",
+    "pdfkit": "^0.19.1",
+    "puppeteer": "^25.3.0",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
