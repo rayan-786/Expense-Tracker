@@ -42,24 +42,92 @@ exports.register = async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
 
     const [id] = await db("users").insert({
+  name,
+  email,
+  password: hash
+});
 
-      name,
+// Default Accounts
+await db("accounts").insert([
+  {
+    user_id: id,
+    name: "Cash",
+    type: "Cash",
+    opening_balance: 0,
+    current_balance: 0,
+    is_default: 1,
+    is_active: 1
+  },
+  {
+    user_id: id,
+    name: "HDFC Bank",
+    type: "Bank",
+    opening_balance: 0,
+    current_balance: 0,
+    is_default: 0,
+    is_active: 1
+  },
+  {
+    user_id: id,
+    name: "UPI",
+    type: "Wallet",
+    opening_balance: 0,
+    current_balance: 0,
+    is_default: 0,
+    is_active: 1
+  },
+  {
+    user_id: id,
+    name: "Paytm Wallet",
+    type: "Wallet",
+    opening_balance: 0,
+    current_balance: 0,
+    is_default: 0,
+    is_active: 1
+  },
+  {
+  user_id: id,
+  name: "PhonePe Wallet",
+  type: "Wallet",
+  opening_balance: 0,
+  current_balance: 0,
+  is_default: 0,
+  is_active: 1
+},
+{
+  user_id: id,
+  name: "Google Pay",
+  type: "Wallet",
+  opening_balance: 0,
+  current_balance: 0,
+  is_default: 0,
+  is_active: 1
+},
+{
+  user_id: id,
+  name: "ICICI Bank",
+  type: "Bank",
+  opening_balance: 0,
+  current_balance: 0,
+  is_default: 0,
+  is_active: 1
+},
+{
+  user_id: id,
+  name: "SBI Bank",
+  type: "Bank",
+  opening_balance: 0,
+  current_balance: 0,
+  is_default: 0,
+  is_active: 1
+}
+]);
 
-      email,
-
-      password: hash
-
-    });
-
-    res.status(201).json({
-
-      success: true,
-
-      message: "User registered successfully",
-
-      userId: id
-
-    });
+res.status(201).json({
+  success: true,
+  message: "User registered successfully",
+  userId: id
+});
 
   } catch (error) {
 
