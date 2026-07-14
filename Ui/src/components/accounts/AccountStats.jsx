@@ -81,7 +81,7 @@ const AccountStats = ({
 
         title="Total Balance"
 
-        value={`₹ ${totalBalance.toLocaleString("en-IN")}`}
+        value={totalBalance}
 
         icon={IndianRupee}
 
@@ -102,6 +102,7 @@ const AccountStats = ({
         icon={Landmark}
 
         color="blue"
+         prefix=""
 
       />
 
@@ -118,6 +119,7 @@ const AccountStats = ({
         icon={Wallet}
 
         color="amber"
+         prefix=""
 
       />
 
@@ -134,6 +136,7 @@ const AccountStats = ({
         icon={Building2}
 
         color="indigo"
+         prefix=""
 
       />
 
@@ -150,6 +153,7 @@ const AccountStats = ({
         icon={PiggyBank}
 
         color="purple"
+         prefix=""
 
       />
 
@@ -166,6 +170,7 @@ const AccountStats = ({
         icon={CreditCard}
 
         color="red"
+         prefix=""
 
       />
 

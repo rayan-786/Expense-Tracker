@@ -51,6 +51,7 @@ const CategoryStats = ({
         icon={FolderTree}
 
         color="blue"
+         prefix=""
 
       />
 
@@ -67,6 +68,7 @@ const CategoryStats = ({
         icon={TrendingUp}
 
         color="green"
+         prefix=""
 
       />
 
@@ -83,6 +85,7 @@ const CategoryStats = ({
         icon={TrendingDown}
 
         color="red"
+         prefix=""
 
       />
 
