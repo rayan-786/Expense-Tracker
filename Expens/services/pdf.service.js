@@ -2,7 +2,6 @@ const PDFDocument = require("pdfkit");
 const fs = require("fs-extra");
 const path = require("path");
 
-
 async function generateExpenseReport(report) {
 
   return new Promise(async (resolve, reject) => {
@@ -623,19 +622,9 @@ module.exports = {
         );
 
       doc.image(
-
-        paymentChart,
-
-        70,
-
-        150,
-
-        {
-
+        paymentChart, 70, 150,{
           width: 450
-
         }
-
       );
 
       doc.addPage();

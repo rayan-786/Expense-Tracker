@@ -83,6 +83,7 @@ await db("accounts").insert([
     opening_balance: 0,
     current_balance: 0,
     is_default: 0,
+    
     is_active: 1
   },
   {

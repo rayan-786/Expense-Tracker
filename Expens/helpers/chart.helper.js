@@ -1,12 +1,6 @@
 const fs = require("fs-extra");
-
 const path = require("path");
-
-const {
-
-  ChartJSNodeCanvas
-
-} = require("chartjs-node-canvas");
+const {ChartJSNodeCanvas} = require("chartjs-node-canvas");
 
 /* =========================================================
    CONFIG

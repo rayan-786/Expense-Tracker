@@ -18,27 +18,8 @@ const {
 
 } = require("../controllers/category.controller");
 
-/* =========================================================
-   GET ALL CATEGORIES
-   GET /api/categories
-   GET /api/categories?type=income
-   GET /api/categories?type=expense
-========================================================= */
+router.get("/", verifyToken, getCategories);
 
-router.get(
-
-  "/",
-
-  verifyToken,
-
-  getCategories
-
-);
-
-/* =========================================================
-   GET CATEGORY BY ID
-   GET /api/categories/:id
-========================================================= */
 
 router.get(
 
@@ -50,10 +31,6 @@ router.get(
 
 );
 
-/* =========================================================
-   CREATE CATEGORY
-   POST /api/categories
-========================================================= */
 
 router.post(
 
@@ -65,10 +42,7 @@ router.post(
 
 );
 
-/* =========================================================
-   UPDATE CATEGORY
-   PUT /api/categories/:id
-========================================================= */
+
 
 router.put(
 
@@ -80,10 +54,6 @@ router.put(
 
 );
 
-/* =========================================================
-   DELETE CATEGORY
-   DELETE /api/categories/:id
-========================================================= */
 
 router.delete(
 
