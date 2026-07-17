@@ -66,7 +66,7 @@ app.use(
 
 app.use(express.json());
 app.use(passport.initialize());
-app.use(logger());
+app.use(logger);
 
 /* =========================================================
    STATIC FILES
