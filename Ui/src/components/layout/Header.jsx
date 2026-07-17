@@ -1,12 +1,10 @@
-import { Menu, Search, Bell, User } from "lucide-react";
+import { Menu, Search, Bell } from "lucide-react";
 
 import { useLocation } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 
 const Header = ({ onMenuClick }) => {
-
-  const { user } = useAuth();
 
   const location = useLocation();
 
@@ -158,31 +156,6 @@ const Header = ({ onMenuClick }) => {
 
           {/* User */}
 
-          <div className="flex items-center gap-3 rounded-xl border border-gray-200 px-3 py-2">
-
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white">
-
-              <User size={18} />
-
-            </div>
-
-            <div className="hidden text-left md:block">
-
-              <h4 className="text-sm font-semibold text-gray-800">
-
-                {user?.name || "User"}
-
-              </h4>
-
-              <p className="text-xs text-gray-500">
-
-                {user?.email || ""}
-
-              </p>
-
-            </div>
-
-          </div>
 
         </div>
 

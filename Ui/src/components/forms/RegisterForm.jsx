@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
+
+
 import {
 
   User,
@@ -22,7 +24,8 @@ import { toast } from "react-hot-toast";
 
 import {
 
-  register as registerUser
+  register as registerUser,
+  verifyOTP
 
 } from "../../services/auth.service";
 
@@ -35,6 +38,10 @@ const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
+const [otp, setOtp] = useState("");
+const [email, setEmail] = useState("");
+const [formData, setFormData] = useState(null);
 
   const {
 
@@ -90,15 +97,11 @@ const RegisterForm = () => {
 
       const response = await registerUser(payload);
 
-      toast.success(
+      toast.success(response.message);
 
-        response.message ||
-
-        "Registration Successful"
-
-      );
-
-      navigate("/login");
+setEmail(data.email);
+setFormData(data);
+setShowOtpModal(true);
 
     }
 
@@ -124,8 +127,33 @@ const RegisterForm = () => {
 
   };
 
-  return (
+  const handleVerifyOTP = async () => {
+  try {
+    setLoading(true);
 
+    const response = await verifyOTP({
+      email,
+      otp,
+    });
+
+    toast.success(response.message);
+
+    setShowOtpModal(false);
+
+    navigate("/login");
+
+  } catch (err) {
+    toast.error(
+      err.response?.data?.message ||
+      "OTP Verification Failed"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
+  return (
+ <>
     <form
 
       onSubmit={handleSubmit(onSubmit)}
@@ -593,9 +621,46 @@ const RegisterForm = () => {
       </p>
 
     </form>
+    {showOtpModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+
+    <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+
+      <h2 className="text-2xl font-bold">
+        Verify Email
+      </h2>
+
+      <p className="mt-2 text-gray-500">
+        Enter the OTP sent to
+        <br />
+        <b>{email}</b>
+      </p>
+
+      <input
+        value={otp}
+        onChange={(e) => setOtp(e.target.value)}
+        placeholder="Enter 6 digit OTP"
+        maxLength={6}
+        className="mt-5 w-full rounded-xl border p-3 outline-none focus:border-blue-600"
+      />
+
+      <button
+        onClick={handleVerifyOTP}
+        className="mt-5 w-full rounded-xl bg-blue-600 py-3 font-semibold text-white"
+      >
+        Verify OTP
+      </button>
+
+    </div>
+
+  </div>
+)}
+</>
 
   );
 
 };
+
+
 
 export default RegisterForm;

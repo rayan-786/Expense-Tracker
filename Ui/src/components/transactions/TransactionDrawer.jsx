@@ -120,7 +120,18 @@ useEffect(() => {
 
           onClick={(e) => e.stopPropagation()}
 
-          className="absolute right-0 top-0 flex h-full w-full flex-col bg-white shadow-2xl sm:w-[540px] lg:w-[650px]"
+          className="
+absolute
+right-0
+top-0
+flex
+h-screen
+w-full
+max-w-[760px]
+flex-col
+bg-white
+shadow-2xl
+"
 
         >
 

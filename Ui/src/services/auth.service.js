@@ -86,3 +86,59 @@ export const isAuthenticated = () => {
   );
 
 };
+
+export const verifyOTP = async (data) => {
+  const response = await api.post("/auth/verify-otp", data);
+  return response.data;
+};
+export const sendEmailOTP = async (newEmail) => {
+  const response = await api.post("/auth/send-email-otp", {
+    newEmail,
+  });
+
+  return response.data;
+};
+
+export const updateEmail = async (otp) => {
+  const response = await api.put("/auth/update-email", {
+    otp,
+  });
+
+  return response.data;
+};
+export const changePassword = async (data) => {
+  const response = await api.put(
+    "/auth/change-password",
+    data
+  );
+
+  return response.data;
+};
+
+export const updateLanguage = async (language)=>{
+
+ const response=await api.put(
+
+ "/auth/language",
+
+ {language}
+
+ );
+
+ return response.data;
+
+};
+export const deleteAccount = async (password) => {
+
+  const response = await api.delete(
+    "/auth/delete-account",
+    {
+      data: {
+        password
+      }
+    }
+  );
+
+  return response.data;
+
+};

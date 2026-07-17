@@ -11,6 +11,10 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const { login } = useAuth();
+  const handleGithubLogin = () => {
+  window.location.href =
+    "http://localhost:10000/api/auth/github";
+};
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -64,15 +68,15 @@ const LoginForm = () => {
 
     catch (error) {
 
-      toast.error(
+  toast.error(
 
-        error.message ||
+    error.response?.data?.message ||
 
-        "Invalid email or password."
+    "Invalid Email or Password"
 
-      );
+  );
 
-    }
+}
 
     finally {
 
@@ -322,17 +326,12 @@ const LoginForm = () => {
 
         </label>
 
-        <button
-
-          type="button"
-
-          className="text-sm font-medium text-blue-600 hover:underline"
-
-        >
-
-          Forgot Password?
-
-        </button>
+        <Link
+  to="/forgot-password"
+  className="text-sm font-medium text-blue-600 hover:underline"
+>
+  Forgot Password?
+</Link>
 
       </div>
 
@@ -361,8 +360,45 @@ const LoginForm = () => {
           "Sign In"
 
         )}
+        
 
       </button>
+      {/* ================= GITHUB LOGIN ================= */}
+
+<div className="relative my-6">
+
+  <div className="absolute inset-0 flex items-center">
+    <div className="w-full border-t border-gray-200"></div>
+  </div>
+
+  <div className="relative flex justify-center">
+    <span className="bg-white px-4 text-sm text-gray-500">
+      OR CONTINUE WITH
+    </span>
+  </div>
+
+</div>
+
+<button
+  type="button"
+  onClick={handleGithubLogin}
+  className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white py-3 font-semibold text-gray-700 transition hover:bg-gray-50 hover:shadow-sm"
+>
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width="22"
+    height="22"
+    fill="currentColor"
+  >
+    <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.93c.58.1.79-.25.79-.56v-2.18c-3.2.7-3.88-1.36-3.88-1.36-.53-1.33-1.29-1.69-1.29-1.69-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.72-1.56-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.2-3.09-.12-.3-.52-1.5.11-3.12 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.22-1.49 3.2-1.18 3.2-1.18.63 1.62.23 2.82.11 3.12.75.81 1.2 1.83 1.2 3.09 0 4.41-2.7 5.39-5.27 5.67.42.37.79 1.09.79 2.21v3.28c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+  </svg>
+
+  Continue with GitHub
+
+</button>
+      
 
       {/* ================= REGISTER ================= */}
 

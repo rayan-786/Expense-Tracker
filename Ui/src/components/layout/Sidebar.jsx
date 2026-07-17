@@ -8,7 +8,8 @@ import {
   PiggyBank,
   FileText,
   User,
-  LogOut
+  LogOut,
+  Settings
 } from "lucide-react";
 
 import useAuth from "../../hooks/useAuth";
@@ -59,6 +60,16 @@ const Sidebar = () => {
       name: "Reports",
       path: "/reports",
       icon: FileText
+    },
+    {
+    name: "Profile",
+    path: "/profile",
+    icon: User
+    },
+    {
+      name: "Settings",
+      path: "/settings",
+      icon: Settings
     }
 
   ];

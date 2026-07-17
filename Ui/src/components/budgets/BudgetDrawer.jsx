@@ -260,7 +260,22 @@ const handleSubmit = async (e) => {
 
           }
 
-          className="absolute right-0 top-0 flex h-full w-full flex-col bg-white shadow-2xl sm:w-[520px] lg:w-[620px]"
+          className="
+fixed
+right-0
+top-0
+h-screen
+w-full
+max-w-full
+bg-white
+shadow-2xl
+flex
+flex-col
+
+sm:max-w-[520px]
+md:max-w-[560px]
+lg:max-w-[620px]
+"
 
         >
 
@@ -324,7 +339,17 @@ const handleSubmit = async (e) => {
 
           >
 
-            <div className="flex-1 space-y-6 overflow-y-auto p-6">
+            <div
+className="
+flex-1
+overflow-y-auto
+px-4
+py-5
+sm:px-6
+space-y-6
+min-h-0
+"
+>
 
               {/* CATEGORY */}
 
@@ -557,7 +582,21 @@ const handleSubmit = async (e) => {
                 FOOTER
             ====================================== */}
 
-            <div className="flex items-center justify-end gap-3 border-t border-slate-200 p-6">
+            <div
+className="
+sticky
+bottom-0
+bg-white
+border-t
+border-slate-200
+px-4
+py-4
+sm:px-6
+flex
+justify-end
+gap-3
+"
+>
 
               <button
 

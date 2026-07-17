@@ -35,7 +35,7 @@ api.interceptors.request.use(
     }
 
     console.log(
-      `%c🚀 API Request`,
+      "%c🚀 API Request",
       "color:#2563EB;font-weight:bold"
     );
 
@@ -68,7 +68,7 @@ api.interceptors.response.use(
   (response) => {
 
     console.log(
-      `%c✅ API Response`,
+      "%c✅ API Response",
       "color:#22C55E;font-weight:bold"
     );
 
@@ -99,8 +99,8 @@ api.interceptors.response.use(
 
       url: error.config?.url,
 
-      message: error.response?.data?.message ||
-
+      message:
+        error.response?.data?.message ||
         error.message
 
     });
@@ -109,11 +109,23 @@ api.interceptors.response.use(
        AUTO LOGOUT
     ============================================== */
 
-    if (error.response?.status === 401) {
+    const currentPath = window.location.pathname;
+
+    const isAuthPage =
+      currentPath.includes("/login") ||
+      currentPath.includes("/register") ||
+      currentPath.includes("/forgot-password") ||
+      currentPath.includes("/reset-password");
+
+    if (
+      error.response?.status === 401 &&
+      !isAuthPage
+    ) {
 
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
 
-      window.location.href = "/login";
+      window.location.replace("/login");
 
     }
 

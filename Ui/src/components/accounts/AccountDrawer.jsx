@@ -252,7 +252,18 @@ const AccountDrawer = ({
 
           }
 
-          className="absolute right-0 top-0 flex h-full w-full flex-col bg-white shadow-2xl sm:w-[520px] lg:w-[620px]"
+          className="
+absolute
+right-0
+top-0
+flex
+h-screen
+w-full
+max-w-[760px]
+flex-col
+bg-white
+shadow-2xl
+"
 
         >
 
@@ -260,8 +271,7 @@ const AccountDrawer = ({
               HEADER
           ========================================== */}
 
-          <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
-
+          <div className="sticky top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white px-8 py-5">
             <div>
 
               <h2 className="text-2xl font-bold">
@@ -309,15 +319,14 @@ const AccountDrawer = ({
           ========================================== */}
 
           <form
+  onSubmit={handleSubmit}
+  className="flex h-full min-h-0 flex-1 flex-col overflow-hidden"
+>
 
-            onSubmit={handleSubmit}
-
-            className="flex flex-1 flex-col"
-
-          >
-
-            <div className="flex-1 space-y-6 overflow-y-auto p-6">
-
+           <div
+  className="flex-1 min-h-0 overflow-y-auto px-8 py-6 space-y-6"
+  style={{ WebkitOverflowScrolling: "touch" }}
+>
               {/* ACCOUNT NAME */}
 
               <div>
@@ -675,7 +684,7 @@ const AccountDrawer = ({
                 FOOTER
             ====================================== */}
 
-            <div className="flex items-center justify-end gap-3 border-t border-slate-200 p-6">
+            <div className="sticky bottom-0 z-20 flex items-center justify-end gap-3 border-t border-slate-200 bg-white px-8 py-5 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
 
               <button
 

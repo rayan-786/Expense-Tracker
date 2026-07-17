@@ -8,7 +8,8 @@ import {
   PiggyBank,
   FileText,
   User,
-  LogOut
+  LogOut,
+  Settings
 } from "lucide-react";
 
 import useAuth from "../../hooks/useAuth";
@@ -25,43 +26,55 @@ const MobileSidebar = ({ open, setOpen }) => {
 
   const menus = [
 
-    {
-      name: "Dashboard",
-      path: "/dashboard",
-      icon: LayoutDashboard
-    },
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: LayoutDashboard
+  },
 
-    {
-      name: "Transactions",
-      path: "/transactions",
-      icon: ArrowLeftRight
-    },
+  {
+    name: "Transactions",
+    path: "/transactions",
+    icon: ArrowLeftRight
+  },
 
-    {
-      name: "Categories",
-      path: "/categories",
-      icon: Tags
-    },
+  {
+    name: "Categories",
+    path: "/categories",
+    icon: Tags
+  },
 
-    {
-      name: "Accounts",
-      path: "/accounts",
-      icon: Wallet
-    },
+  {
+    name: "Accounts",
+    path: "/accounts",
+    icon: Wallet
+  },
 
-    {
-      name: "Budgets",
-      path: "/budgets",
-      icon: PiggyBank
-    },
+  {
+    name: "Budgets",
+    path: "/budgets",
+    icon: PiggyBank
+  },
 
-    {
-      name: "Reports",
-      path: "/reports",
-      icon: FileText
-    }
+  {
+    name: "Reports",
+    path: "/reports",
+    icon: FileText
+  },
 
-  ];
+  {
+    name: "Profile",
+    path: "/profile",
+    icon: User
+  },
+
+  {
+    name: "Settings",
+    path: "/settings",
+    icon: Settings
+  }
+
+];
 
   /* =========================================================
      LOGOUT
@@ -177,8 +190,7 @@ const MobileSidebar = ({ open, setOpen }) => {
             MENU
         ========================================== */}
 
-        <nav className="flex-1 space-y-2 overflow-y-auto p-5">
-
+       <nav className="flex-1 overflow-y-auto px-4 py-5">
           {menus.map((menu) => {
 
             const Icon = menu.icon;
@@ -197,17 +209,23 @@ const MobileSidebar = ({ open, setOpen }) => {
 
                   `
 
-                  flex items-center gap-4 rounded-xl px-4 py-3
-
-                  text-sm font-medium transition-all
+                  mb-2
+flex
+items-center
+gap-4
+rounded-xl
+px-4
+py-3
+text-sm
+font-medium
+transition-all
 
                   ${
 
                     isActive
 
-                      ? "bg-blue-600 text-white"
-
-                      : "text-gray-700 hover:bg-gray-100"
+                      ?  "bg-blue-600 text-white"
+: "text-gray-700 hover:bg-gray-100"
 
                   }
 
@@ -233,7 +251,7 @@ const MobileSidebar = ({ open, setOpen }) => {
             USER
         ========================================== */}
 
-        <div className="border-t border-gray-200 p-5">
+        <div className="shrink-0 border-t border-gray-200 bg-white p-5">
 
           <div className="mb-4 flex items-center gap-3">
 

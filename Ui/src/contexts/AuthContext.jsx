@@ -1,27 +1,16 @@
 import {
-
   createContext,
-
   useContext,
-
   useEffect,
-
   useState
-
 } from "react";
 
 import {
-
   login as loginService,
-
   logout as logoutService,
-
   saveAuth,
-
   getToken,
-
   getUser
-
 } from "../services/auth.service";
 
 /* =========================================================
@@ -37,9 +26,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
-
   const [token, setToken] = useState(null);
-
   const [loading, setLoading] = useState(true);
 
   /* =====================================================
@@ -49,15 +36,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
 
     const storedToken = getToken();
-
     const storedUser = getUser();
 
     if (storedToken && storedUser) {
-
       setToken(storedToken);
-
       setUser(storedUser);
-
     }
 
     setLoading(false);
@@ -73,21 +56,15 @@ export const AuthProvider = ({ children }) => {
     const response = await loginService(credentials);
 
     if (!response.success) {
-
       throw new Error(response.message);
-
     }
 
     saveAuth(
-
       response.token,
-
       response.user
-
     );
 
     setToken(response.token);
-
     setUser(response.user);
 
     return response;
@@ -103,8 +80,22 @@ export const AuthProvider = ({ children }) => {
     logoutService();
 
     setToken(null);
-
     setUser(null);
+
+  };
+
+  /* =====================================================
+     UPDATE USER
+  ===================================================== */
+
+  const updateUser = (updatedUser) => {
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(updatedUser)
+    );
+
+    setUser(updatedUser);
 
   };
 
@@ -115,6 +106,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
 
     user,
+    setUser,
 
     token,
 
@@ -124,16 +116,16 @@ export const AuthProvider = ({ children }) => {
 
     login,
 
-    logout
+    logout,
+
+    updateUser
 
   };
 
   return (
 
     <AuthContext.Provider value={value}>
-
       {children}
-
     </AuthContext.Provider>
 
   );
@@ -145,7 +137,5 @@ export const AuthProvider = ({ children }) => {
 ========================================================= */
 
 export const useAuth = () => {
-
   return useContext(AuthContext);
-
 };
