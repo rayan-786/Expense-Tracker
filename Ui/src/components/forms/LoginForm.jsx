@@ -13,7 +13,7 @@ const LoginForm = () => {
   const { login } = useAuth();
   const handleGithubLogin = () => {
   window.location.href =
-    "http://localhost:10000/api/auth/github";
+  `${import.meta.env.VITE_API_URL}/api/auth/github`;
 };
 
   const [showPassword, setShowPassword] = useState(false);
