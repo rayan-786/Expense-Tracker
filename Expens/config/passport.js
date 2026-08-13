@@ -1,11 +1,13 @@
+const passport = require("passport");
+const GitHubStrategy = require("passport-github2").Strategy;
+
 passport.use(
   new GitHubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
 
-      callbackURL:
-        `${process.env.BACKEND_URL}/api/auth/github/callback`,
+      callbackURL: `${process.env.BACKEND_URL}/api/auth/github/callback`,
 
       scope: ["user:email"],
     },
@@ -23,10 +25,11 @@ passport.use(
           name: profile.displayName || profile.username,
           email,
         });
-
       } catch (err) {
         return done(err, null);
       }
     }
   )
 );
+
+module.exports = passport;
