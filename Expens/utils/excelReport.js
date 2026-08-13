@@ -1,153 +1,145 @@
 const ExcelJS = require("exceljs");
-const fs = require("fs");
-const path = require("path");
 
 exports.generateExcel = async (report) => {
-
   const workbook = new ExcelJS.Workbook();
 
-  const sheet = workbook.addWorksheet(
+  workbook.creator = "Expense Tracker";
+  workbook.created = new Date();
 
-    "Expense Report"
+  // =========================================================
+  // SUMMARY SHEET
+  // =========================================================
 
-  );
+  const summarySheet = workbook.addWorksheet("Summary");
 
-  /* =====================================================
-     SUMMARY
-  ===================================================== */
-
-  sheet.columns = [
-
-    {
-
-      header: "Field",
-
-      key: "field",
-
-      width: 25
-
-    },
-
-    {
-
-      header: "Value",
-
-      key: "value",
-
-      width: 20
-
-    }
-
+  summarySheet.columns = [
+    { header: "Report", key: "report", width: 25 },
+    { header: "Value", key: "value", width: 25 },
   ];
 
-  sheet.addRow({
-
-    field: "Income",
-
-    value: report.summary.income
-
-  });
-
-  sheet.addRow({
-
-    field: "Expense",
-
-    value: report.summary.expense
-
-  });
-
-  sheet.addRow({
-
-    field: "Savings",
-
-    value: report.summary.savings
-
-  });
-
-  sheet.addRow({
-
-    field: "Balance",
-
-    value: report.summary.balance
-
-  });
-
-  sheet.addRow([]);
-
-  /* =====================================================
-     TOP EXPENSES
-  ===================================================== */
-
-  sheet.addRow([
-
-    "Top Expenses"
-
+  summarySheet.addRows([
+    {
+      report: "Total Income",
+      value: report.totalIncome || 0,
+    },
+    {
+      report: "Total Expense",
+      value: report.totalExpense || 0,
+    },
+    {
+      report: "Balance",
+      value: report.balance || 0,
+    },
   ]);
 
-  sheet.addRow([
+  summarySheet.getRow(1).font = {
+    bold: true,
+  };
 
-    "Title",
+  // =========================================================
+  // CATEGORY BREAKDOWN
+  // =========================================================
 
-    "Category",
+  const categorySheet = workbook.addWorksheet("Categories");
 
-    "Amount",
+  categorySheet.columns = [
+    {
+      header: "Category",
+      key: "category",
+      width: 30,
+    },
+    {
+      header: "Amount",
+      key: "amount",
+      width: 20,
+    },
+  ];
 
-    "Date"
+  if (Array.isArray(report.categoryBreakdown)) {
+    report.categoryBreakdown.forEach((item) => {
+      categorySheet.addRow({
+        category:
+          item.category ||
+          item.name ||
+          "Unknown",
 
-  ]);
-
-  report.topExpenses.forEach((item) => {
-
-    sheet.addRow([
-
-      item.title,
-
-      item.category_name,
-
-      item.amount,
-
-      item.transaction_date
-
-    ]);
-
-  });
-
-  const reportsDir = path.join(
-
-    __dirname,
-
-    "../uploads/reports"
-
-  );
-
-  if (!fs.existsSync(reportsDir)) {
-
-    fs.mkdirSync(
-
-      reportsDir,
-
-      { recursive: true }
-
-    );
-
+        amount:
+          item.amount ||
+          item.total ||
+          0,
+      });
+    });
   }
 
-  const fileName = `Expense_Report_${Date.now()}.xlsx`;
+  categorySheet.getRow(1).font = {
+    bold: true,
+  };
 
-  const filePath = path.join(
+  // =========================================================
+  // TOP EXPENSES
+  // =========================================================
 
-    reportsDir,
+  const expenseSheet = workbook.addWorksheet("Top Expenses");
 
-    fileName
+  expenseSheet.columns = [
+    {
+      header: "Description",
+      key: "description",
+      width: 35,
+    },
+    {
+      header: "Category",
+      key: "category",
+      width: 25,
+    },
+    {
+      header: "Amount",
+      key: "amount",
+      width: 20,
+    },
+    {
+      header: "Date",
+      key: "date",
+      width: 20,
+    },
+  ];
 
-  );
+  if (Array.isArray(report.topExpenses)) {
+    report.topExpenses.forEach((item) => {
+      expenseSheet.addRow({
+        description:
+          item.description ||
+          item.title ||
+          "Expense",
 
-  await workbook.xlsx.writeFile(
+        category:
+          item.category ||
+          item.categoryName ||
+          "N/A",
 
-    filePath
+        amount:
+          item.amount ||
+          0,
 
-  );
+        date:
+          item.date ||
+          item.created_at ||
+          "",
+      });
+    });
+  }
 
-  return filePath;
+  expenseSheet.getRow(1).font = {
+    bold: true,
+  };
 
+  // =========================================================
+  // IMPORTANT FOR VERCEL
+  // DO NOT USE workbook.xlsx.writeFile()
+  // RETURN BUFFER INSTEAD
+  // =========================================================
+
+  const buffer = await workbook.xlsx.writeBuffer();
+
+  return buffer;
 };
