@@ -38,6 +38,8 @@ const reportRoutes = require("./routes/report.routes");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 /* =========================================================
    SECURITY
 ========================================================= */
