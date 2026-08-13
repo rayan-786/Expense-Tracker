@@ -113,22 +113,26 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 10000;
 
-app.listen(PORT, () => {
-  console.clear();
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.clear();
 
-  console.log("\n========================================");
-  console.log("🚀 Expense Tracker API");
-  console.log("========================================");
-  console.log("✅ Database Connected");
-  console.log(`📦 Database    : ${process.env.DB_NAME}`);
-  console.log(
-    `🌐 Environment : ${process.env.NODE_ENV || "development"}`
-  );
-  console.log("🔐 JWT Ready");
-  console.log(
-    `🚀 Server      : ${
-      process.env.BACKEND_URL || `http://localhost:${PORT}`
-    }`
-  );
-  console.log("========================================\n");
-});
+        console.log("\n========================================");
+        console.log("🚀 Expense Tracker API");
+        console.log("========================================");
+        console.log("✅ Database Connected");
+        console.log(`📦 Database    : ${process.env.DB_NAME}`);
+        console.log(
+            `🌐 Environment : ${process.env.NODE_ENV || "development"}`
+        );
+        console.log("🔐 JWT Ready");
+        console.log(
+            `🚀 Server      : ${
+                process.env.BACKEND_URL || `http://localhost:${PORT}`
+            }`
+        );
+        console.log("========================================\n");
+    });
+}
+
+module.exports = app;
