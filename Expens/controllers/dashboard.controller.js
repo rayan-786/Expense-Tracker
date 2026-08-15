@@ -410,6 +410,38 @@ else if (budgetUsage >= 80) {
       .limit(5);
 
     /* =====================================================
+       ACCOUNTS SUMMARY
+    ===================================================== */
+
+    const accountsQuery = db("accounts")
+
+      .where({
+
+        user_id: userId,
+
+        is_active: true
+
+      })
+
+      .select(
+
+        "id",
+
+        "name",
+
+        "type",
+
+        "current_balance",
+
+        "is_default"
+
+      )
+
+      .orderBy("is_default", "desc")
+
+      .orderBy("name");
+
+    /* =====================================================
        DASHBOARD STATISTICS
     ===================================================== */
 
@@ -463,6 +495,8 @@ else if (budgetUsage >= 80) {
 
       topCategories,
 
+      accounts,
+
       statistics
 
     ] = await Promise.all([
@@ -476,6 +510,8 @@ else if (budgetUsage >= 80) {
       topExpensesQuery,
 
       topCategoriesQuery,
+
+      accountsQuery,
 
       statisticsQuery
 
@@ -494,6 +530,38 @@ else if (budgetUsage >= 80) {
       totalBudgets
 
     ] = statistics;
+
+    const accountsSummary = {
+
+      totalAccounts: accounts.length,
+
+      totalBalance: accounts.reduce(
+
+        (sum, account) =>
+
+          sum + Number(account.current_balance || 0),
+
+        0
+
+      ),
+
+      defaultAccount:
+
+        accounts.find((account) => account.is_default)?.name || "",
+
+      accounts: accounts.map((account) => ({
+
+        id: account.id,
+
+        name: account.name,
+
+        type: account.type,
+
+        balance: Number(account.current_balance || 0)
+
+      }))
+
+    };
 
 /* =====================================================
    FORMAT RESPONSE
@@ -584,6 +652,8 @@ const dashboard = {
   topExpenses,
 
   topCategories,
+
+  accountsSummary,
 
   /* ===================================================
      DASHBOARD STATISTICS

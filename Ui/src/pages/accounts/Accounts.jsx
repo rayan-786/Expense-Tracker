@@ -9,6 +9,7 @@ import {
 import PageHeader from "../../components/ui/PageHeader";
 
 import AccountStats from "../../components/accounts/AccountStats";
+import AccountBalanceChart from "../../components/charts/AccountBalanceChart";
 import AccountFilters from "../../components/accounts/AccountFilters";
 import AccountTable from "../../components/accounts/AccountTable";
 import AccountDrawer from "../../components/accounts/AccountDrawer";
@@ -215,6 +216,12 @@ const Accounts = () => {
       ========================================== */}
 
       <AccountStats
+
+        accounts={accounts}
+
+      />
+
+      <AccountBalanceChart
 
         accounts={accounts}
 

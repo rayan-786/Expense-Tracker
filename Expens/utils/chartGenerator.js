@@ -15,13 +15,11 @@ const HEIGHT = 500;
    /tmp is writable.
 */
 const CHART_DIR = path.join(
-  "/tmp",
-  "expense-tracker-charts"
+  process.cwd(),
+  "uploads",
+  "reports",
+  "charts"
 );
-
-/* =========================================================
-   CREATE CHART DIRECTORY
-========================================================= */
 
 if (!fs.existsSync(CHART_DIR)) {
   fs.mkdirSync(CHART_DIR, {

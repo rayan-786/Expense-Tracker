@@ -13,6 +13,8 @@ import PageHeader from "../../components/ui/PageHeader";
 import SummaryCards from "../../components/dashboard/SummaryCards";
 import MonthlyChart from "../../components/dashboard/MonthlyChart";
 import ExpensePieChart from "../../components/dashboard/ExpensePieChart";
+import PaymentMethodChart from "../../components/charts/PaymentMethodChart";
+import TopCategoriesChart from "../../components/charts/TopCategoriesChart";
 import BudgetProgress from "../../components/dashboard/BudgetProgress";
 import RecentTransactions from "../../components/dashboard/RecentTransactions";
 import AccountsSummary from "../../components/dashboard/AccountsSummary";
@@ -331,6 +333,22 @@ const Dashboard = () => {
         <ExpensePieChart
 
           data={dashboard?.expenseByCategory || []}
+
+        />
+
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+
+        <PaymentMethodChart
+
+          data={dashboard?.paymentMethods || []}
+
+        />
+
+        <TopCategoriesChart
+
+          data={dashboard?.topCategories || []}
 
         />
 

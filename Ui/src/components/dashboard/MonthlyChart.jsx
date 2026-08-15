@@ -13,6 +13,12 @@ import SectionCard from "../ui/SectionCard";
 
 const MonthlyChart = ({ data = [] }) => {
 
+  const chartData = data.map((item) => ({
+    ...item,
+    income: Number(item.income),
+    expense: Number(item.expense)
+  }));
+
   return (
 
     <SectionCard
@@ -37,7 +43,7 @@ const MonthlyChart = ({ data = [] }) => {
 
           <AreaChart
 
-            data={data}
+            data={chartData}
 
             margin={{
 

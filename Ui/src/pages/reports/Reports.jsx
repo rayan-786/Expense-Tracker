@@ -368,6 +368,12 @@ const Reports = () => {
 
               }
 
+              paymentMethods={
+
+                report.paymentMethods || []
+
+              }
+
             />
 
             {/* ==========================================

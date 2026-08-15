@@ -9,6 +9,7 @@ import {
 import PageHeader from "../../components/ui/PageHeader";
 
 import BudgetStats from "../../components/budgets/BudgetStats";
+import BudgetVsSpentChart from "../../components/charts/BudgetVsSpentChart";
 import BudgetFilters from "../../components/budgets/BudgetFilters";
 import BudgetTable from "../../components/budgets/BudgetTable";
 import BudgetDrawer from "../../components/budgets/BudgetDrawer";
@@ -215,6 +216,12 @@ const Budgets = () => {
       ========================================== */}
 
       <BudgetStats
+
+        budgets={budgets}
+
+      />
+
+      <BudgetVsSpentChart
 
         budgets={budgets}
 

@@ -50,9 +50,27 @@ const ReportCharts = ({
 
   expenseByCategory = [],
 
-  cashFlow = {}
+  cashFlow = {},
+
+  paymentMethods = []
 
 }) => {
+
+  const monthlyData = monthlySummary.map((item) => ({
+    ...item,
+    income: Number(item.income),
+    expense: Number(item.expense)
+  }));
+
+  const categoryData = expenseByCategory.map((item) => ({
+    ...item,
+    amount: Number(item.amount)
+  }));
+
+  const paymentData = paymentMethods.map((item) => ({
+    name: item.payment_method || "Unknown",
+    amount: Number(item.amount)
+  }));
 
   /* =========================================================
      CASH FLOW DATA
@@ -118,7 +136,7 @@ const ReportCharts = ({
 
               <BarChart
 
-                data={monthlySummary}
+                data={monthlyData}
 
               >
 
@@ -194,10 +212,7 @@ const ReportCharts = ({
     <PieChart>
 
       <Pie
-        data={expenseByCategory.map(item => ({
-          ...item,
-          amount: Number(item.amount)
-        }))}
+        data={categoryData}
         dataKey="amount"
         nameKey="category"
         cx="50%"
@@ -254,7 +269,7 @@ const ReportCharts = ({
 
               <LineChart
 
-                data={monthlySummary}
+                data={monthlyData}
 
               >
 
@@ -377,6 +392,72 @@ const ReportCharts = ({
         </div>
 
       </div>
+
+      {/* ==========================================
+          ROW 3 — PAYMENT METHODS
+      ========================================== */}
+
+      {paymentData.length > 0 && (
+
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+
+          <h3 className="mb-5 text-lg font-semibold text-slate-800">
+
+            Payment Methods
+
+          </h3>
+
+          <div className="h-[320px]">
+
+            <ResponsiveContainer width="100%" height="100%">
+
+              <BarChart
+
+                data={paymentData}
+
+                layout="vertical"
+
+                margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+
+              >
+
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis type="number" />
+
+                <YAxis
+
+                  type="category"
+
+                  dataKey="name"
+
+                  width={100}
+
+                />
+
+                <Tooltip />
+
+                <Bar
+
+                  dataKey="amount"
+
+                  fill="#8B5CF6"
+
+                  radius={[0, 8, 8, 0]}
+
+                  barSize={24}
+
+                />
+
+              </BarChart>
+
+            </ResponsiveContainer>
+
+          </div>
+
+        </div>
+
+      )}
 
     </div>
 

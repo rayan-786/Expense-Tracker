@@ -60,10 +60,10 @@ app.use(
 );
 
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
+    cors({
+      origin: process.env.FRONTEND_URL,
+      credentials: true
+    })
 );
 
 app.use(express.json());
@@ -116,25 +116,37 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 10000;
 
 if (require.main === module) {
-    app.listen(PORT, () => {
+
+    app.listen(PORT, "0.0.0.0", () => {
+
         console.clear();
 
         console.log("\n========================================");
         console.log("🚀 Expense Tracker API");
         console.log("========================================");
+
         console.log("✅ Database Connected");
         console.log(`📦 Database    : ${process.env.DB_NAME}`);
+
         console.log(
-            `🌐 Environment : ${process.env.NODE_ENV || "development"}`
-        );
-        console.log("🔐 JWT Ready");
-        console.log(
-            `🚀 Server      : ${
-                process.env.BACKEND_URL || `http://localhost:${PORT}`
+            `🌐 Environment : ${
+                process.env.NODE_ENV || "development"
             }`
         );
+
+        console.log("🔐 JWT Ready");
+
+        console.log(
+            `🚀 Server      : ${
+                process.env.BACKEND_URL ||
+                `http://localhost:${PORT}`
+            }`
+        );
+
         console.log("========================================\n");
+
     });
+
 }
 
 module.exports = app;

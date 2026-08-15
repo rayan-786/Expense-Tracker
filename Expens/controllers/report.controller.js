@@ -1,20 +1,9 @@
-const db = require("../config/db");
-
-const fs = require("fs");
-
 const { buildReport } = require("../helpers/report.helper");
 
-const { generatePdf } = require("../utils/pdfReport");
+const { generatePDF } = require("../utils/pdfReport");
 
 const { generateExcel } = require("../utils/excelReport");
 
-const {
-
-  generateCharts,
-
-  cleanupCharts
-
-} = require("../utils/chartGenerator");
 
 /* =========================================================
    GET REPORTS
@@ -25,11 +14,8 @@ exports.getReports = async (req, res) => {
   try {
 
     const report = await buildReport(
-
       req.user.id,
-
       req.query
-
     );
 
     return res.status(200).json({
@@ -42,16 +28,11 @@ exports.getReports = async (req, res) => {
 
     });
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error("\n❌ Get Reports Error");
-
     console.error("----------------------------------------");
-
     console.error(error);
-
     console.error("----------------------------------------");
 
     return res.status(500).json({
@@ -66,18 +47,12 @@ exports.getReports = async (req, res) => {
 
 };
 
-/* =========================================================
-   EXPORT PDF
-========================================================= */
 
 /* =========================================================
    EXPORT PDF
 ========================================================= */
 
 exports.exportPdf = async (req, res) => {
-
-  let filePath = null;
-  let charts = null;
 
   try {
 
@@ -86,69 +61,30 @@ exports.exportPdf = async (req, res) => {
       req.query
     );
 
-    charts = await generateCharts(report);
-
-    filePath = await generatePdf(
-      report,
-      charts
+    const pdfBuffer = await generatePDF(
+      report
     );
 
-    return res.download(
-
-      filePath,
-
-      "Expense_Report.pdf",
-
-      (err) => {
-
-        if (err) {
-
-          console.error(
-            "PDF Download Error:",
-            err
-          );
-
-        }
-
-        if (
-          charts
-        ) {
-
-          cleanupCharts(charts);
-
-        }
-
-        if (
-          filePath &&
-          fs.existsSync(filePath)
-        ) {
-
-          fs.unlinkSync(filePath);
-
-        }
-
-      }
-
+    res.setHeader(
+      "Content-Type",
+      "application/pdf"
     );
 
-  }
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="Expense_Report.pdf"'
+    );
 
-  catch (error) {
+    res.setHeader(
+      "Content-Length",
+      pdfBuffer.length
+    );
 
-    if (charts) {
+    return res.status(200).send(
+      pdfBuffer
+    );
 
-      cleanupCharts(charts);
-
-    }
-
-    if (
-      filePath &&
-      fs.existsSync(filePath)
-    ) {
-
-      fs.unlinkSync(filePath);
-
-    }
+  } catch (error) {
 
     console.error("\n❌ Export PDF Error");
     console.error("----------------------------------------");
@@ -167,17 +103,12 @@ exports.exportPdf = async (req, res) => {
 
 };
 
-/* =========================================================
-   EXPORT EXCEL
-========================================================= */
 
 /* =========================================================
    EXPORT EXCEL
 ========================================================= */
 
 exports.exportExcel = async (req, res) => {
-
-  let filePath = null;
 
   try {
 
@@ -186,52 +117,30 @@ exports.exportExcel = async (req, res) => {
       req.query
     );
 
-    filePath = await generateExcel(
+    const excelBuffer = await generateExcel(
       report
     );
 
-    return res.download(
-
-      filePath,
-
-      "Expense_Report.xlsx",
-
-      (err) => {
-
-        if (err) {
-
-          console.error(
-            "Excel Download Error:",
-            err
-          );
-
-        }
-
-        if (
-          filePath &&
-          fs.existsSync(filePath)
-        ) {
-
-          fs.unlinkSync(filePath);
-
-        }
-
-      }
-
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
 
-  }
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="Expense_Report.xlsx"'
+    );
 
-  catch (error) {
+    res.setHeader(
+      "Content-Length",
+      excelBuffer.length
+    );
 
-    if (
-      filePath &&
-      fs.existsSync(filePath)
-    ) {
+    return res.status(200).send(
+      excelBuffer
+    );
 
-      fs.unlinkSync(filePath);
-
-    }
+  } catch (error) {
 
     console.error("\n❌ Export Excel Error");
     console.error("----------------------------------------");
